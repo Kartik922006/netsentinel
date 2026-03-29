@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetSentinel - Port Scanner</title>
+    <style>
+        /* Cyber Security Color Theme */
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --primary-color: #2ea043;
+            --hover-color: #2c974b;
+            --error-color: #f85149;
+            --border-color: #30363d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Responsive centered container */
+        .container {
+            background-color: #161b22;
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #58a6ff;
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            font-size: 14px;
+            color: #8b949e;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--hover-color);
+        }
+
+        button:disabled {
+            background-color: #1c5226;
+            cursor: not-allowed;
+            color: #8b949e;
+        }
+
+        .error {
+            color: var(--error-color);
+            margin-bottom: 20px;
+            font-size: 14px;
+            background-color: rgba(248, 81, 73, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(248, 81, 73, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NetSentinel</h1>
+        <p class="subtitle">Network Port Scanner & IDS</p>
+        
+        <!-- Error Message Display -->
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        
+        <form id="scan-form" method="POST" action="/">
+            <input type="text" name="target_ip" value="{{ default_ip }}" placeholder="Enter Target IP (e.g. 127.0.0.1)" required>
+            <button type="submit" id="scan-btn">Scan System</button>
+        </form>
+    </div>
+
+    <script>
+        // Update button text to give feedback during the 5+ second scan
+        document.getElementById('scan-form').addEventListener('submit', function() {
+            var btn = document.getElementById('scan-btn');
+            btn.innerHTML = 'Scanning... Please wait ⏳';
+            // Disable button to prevent multi-submissions
+            btn.disabled = true;
+            // Temporarily assign button value to bypass the form stopping
+            this.submit();
+        });
+    </script>
+</body>
+</html>
